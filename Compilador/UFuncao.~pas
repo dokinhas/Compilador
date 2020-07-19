@@ -1,0 +1,309 @@
+unit UFuncao;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, ClipBrd, StrUtils, Contnrs;
+
+//TYPE
+
+//PROCEDURE e FUNCTION
+procedure EmpilhaTipo(sDivisao: boolean);
+procedure ValidaTipo(sTipo1, sTipo2: Variant);
+procedure Acao1();
+procedure Acao2();
+procedure Acao3();
+procedure Acao4();
+procedure Acao5();
+procedure Acao6();
+procedure Acao7();
+procedure Acao8();
+procedure Acao9();
+procedure Acao10();
+procedure Acao11();
+procedure Acao12();
+procedure Acao13();
+function Acao14(): String;
+function Acao15(): String;
+function Acao16(): String;
+procedure Acao17();
+procedure Acao18();
+procedure Acao19();
+procedure Acao20();
+procedure Acao21();
+procedure Acao22();
+procedure Acao23();
+procedure Acao24();
+procedure Acao25();
+procedure Acao26();
+procedure Acao27();
+procedure Acao28();
+procedure Acao29();
+procedure Acao30();
+procedure Acao31();
+procedure Acao32();
+procedure Acao33();
+procedure Acao34();
+procedure Empilha(gObjeto: Variant);
+procedure Desempilha();
+function PegaObjetoTopo(): Variant;
+
+implementation
+
+//USES
+uses
+  ULexico, UToken, UConstants, ULexicalError, USemanticError, USyntaticError, UAnalysisError,
+  USintatico, USemantico, UMenu;
+
+//VARIAVEIS
+var
+  gPilha: Variant;
+  gTextoArquivo: TStringList;
+//CONSTANTES
+
+//METODOS
+procedure Empilha(gObjeto: Variant);
+begin
+  gPilha.Push(gObjeto);
+end;
+
+procedure Desempilha();
+begin
+  if gPilha.Count > 0 then
+    begin
+      gPilha.Pop;
+    end
+  else
+    begin
+      {PILHA VAZIA}
+    end;
+end;
+
+function PegaObjetoTopo(): Variant;
+begin
+  if gPilha.Count > 0 then
+    Result := gPilha.Peek;
+    //Result := TStrings(gPilha.Peek).Text;
+end;
+
+procedure EmpilhaTipo(sDivisao: boolean);
+var
+  iTipo1, iTipo2: Variant;
+begin
+  iTipo1 := gPilha.Pop;
+  iTipo2 := gPilha.Pop;
+  if sDivisao = True then
+    begin
+      if ((Double(iTipo1) = varDouble) OR (Integer(iTipo1) = varInteger)) AND
+         ((Double(iTipo2) = varDouble) OR (Integer(iTipo1) = varInteger)) then
+        begin
+          gPilha.Push(varDouble);
+        end
+      else
+        begin
+          raise ESemanticError.create('Tipos incompativeos em expreção aritmetica!');
+        end;
+    end
+  else
+    begin
+      ValidaTipo(iTipo1, iTipo2);
+    end;
+end;
+
+procedure ValidaTipo(sTipo1, sTipo2: Variant);
+begin
+  //
+
+end;
+
+procedure Acao1();
+begin
+ empilhaTipo(False);
+ gTextoArquivo.Add('add');
+end;
+
+procedure Acao2();
+begin
+  empilhaTipo(False);
+  gTextoArquivo.Add('sub' + #13#10);
+end;
+
+procedure Acao3();
+begin
+  empilhaTipo(False);
+end;
+
+procedure Acao4();
+begin
+  EmpilhaTipo(True);
+end;
+
+procedure Acao5();
+begin
+//
+end;
+
+procedure Acao6();
+begin
+//
+end;
+
+procedure Acao7();
+begin
+//
+end;
+
+procedure Acao8();
+begin
+//
+end;
+
+procedure Acao9();
+begin
+//
+end;
+
+procedure Acao10();
+begin
+//
+end;
+
+procedure Acao11();
+begin
+//
+end;
+
+procedure Acao12();
+begin
+//
+end;
+
+procedure Acao13();
+begin
+//
+end;
+
+function Acao14(): String;
+begin
+  {tipo := pilha.desempilha
+  if tipo = int64 then
+    codigo.adiciona (conv.i8)
+  codigo.adiciona ('call void [mscorlib]System.Console::Write(' + tipo + ')')}
+end;
+
+function Acao15(): String;
+begin
+  //Para escrever
+  {
+  conv.i4
+  call void [mscorlib]System.Console::Write(int64)
+  }
+  //Inicio Programa .NET
+  Result := '.assembly extern mscorlib {}' + #13#10 +
+            '.assembly teste_a{}' + #13#10 +
+            '.module teste_a{}' + #13#10 + #13#10 +
+            '.class public teste_a{' + #13#10 +
+            '  .method static public void _principal()' + #13#10 +
+            '  { .entrypoint';
+end;
+
+function Acao16(): String;
+begin
+  //Fim Programa .NET
+  Result := '    ret' + #13#10 +
+            '  }' + #13#10 +
+            '}';
+end;
+
+procedure Acao17();
+begin
+//
+end;
+
+procedure Acao18();
+begin
+//
+end;
+
+procedure Acao19();
+begin
+//
+end;
+
+procedure Acao20();
+begin
+//
+end;
+
+procedure Acao21();
+begin
+//
+end;
+
+procedure Acao22();
+begin
+//
+end;
+
+procedure Acao23();
+begin
+//
+end;
+
+procedure Acao24();
+begin
+//
+end;
+
+procedure Acao25();
+begin
+//
+end;
+
+procedure Acao26();
+begin
+//
+end;
+
+procedure Acao27();
+begin
+//
+end;
+
+procedure Acao28();
+begin
+//
+end;
+
+procedure Acao29();
+begin
+//
+end;
+
+procedure Acao30();
+begin
+//
+end;
+
+procedure Acao31();
+begin
+//
+end;
+
+procedure Acao32();
+begin
+//
+end;
+
+procedure Acao33();
+begin
+//
+end;
+
+procedure Acao34();
+begin
+//
+end;
+
+end.

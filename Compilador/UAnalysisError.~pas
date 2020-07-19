@@ -1,0 +1,53 @@
+unit UAnalysisError;
+
+interface
+
+uses sysutils;
+
+type
+    EAnalysisError = class(Exception)
+    public
+        constructor create(message:string; position:integer; iEsperado: String); overload;
+        constructor create(message:string); overload;
+
+        function getMessage : string;
+        function getPosition : integer;
+        function getEncontrado: String;
+
+    private
+        position : integer;
+        encontrado: String;
+    end;
+
+implementation
+
+constructor EAnalysisError.create(message:string; position:integer; iEsperado: String);
+begin
+    inherited create(message);
+    self.position := position;    
+    self.encontrado := 'teste';
+end;
+
+constructor EAnalysisError.create(message:string);
+begin
+    inherited create(message);
+    self.position := -1;
+    self.encontrado := 'teste';
+end;
+
+function EAnalysisError.getMessage : string;
+begin
+    result := inherited Message;
+end;
+
+function EAnalysisError.getPosition : integer;
+begin
+   result := position;
+end;
+
+function getEncontrado: String;
+begin
+  result := self.encontrado;
+end;
+
+end.
