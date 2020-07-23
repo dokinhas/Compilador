@@ -1,6 +1,6 @@
 object FMenu1: TFMenu1
-  Left = 241
-  Top = 23
+  Left = 230
+  Top = 63
   Width = 931
   Height = 633
   HorzScrollBar.Visible = False
@@ -13,9 +13,9 @@ object FMenu1: TFMenu1
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
-  OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnMouseWheel = FormMouseWheel
+  OnShow = FormShow
   DesignSize = (
     923
     602)

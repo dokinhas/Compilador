@@ -50,7 +50,10 @@ type
     function espacoBranco(sTexto: String; sTipo: Integer): String;
     function pegaClasse(sTexto: String): String;
     function PegaErroSintatico(sPosicao: integer) : String;
-    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure AdicionaLista(gItem: String);
+    function PegaUltimoLista(): String;
+    procedure RemoveLista();
   private
     { Private declarations }
     SavedScrollProc :TWndMethod;
@@ -61,7 +64,8 @@ type
 var
   FMenu1: TFMenu1;
   gCaminho: String;
-  gPilha: TObjectStack;
+  gLista: TStringList;
+  gListaArquivo: TStringList;
 implementation
 
 uses
@@ -210,6 +214,9 @@ begin
       end;
   end;
   memMensagens.Lines.Text := 'Programa compilado com sucesso ';
+
+  //***** AQUI GERA O ARQUIVO DE TEXTO *****\\
+
   {try
     t := lexico.nextToken;
     while (t <> nil) do
@@ -524,9 +531,31 @@ begin
   Result := iAtual;
 end;
 
-procedure TFMenu1.FormCreate(Sender: TObject);
+procedure TFMenu1.FormShow(Sender: TObject);
 begin
-  {UFuncao.}gPilha := TObjectStack.Create;
+  gLista := TStringList.Create;
+  gListaArquivo :=  TStringList.Create;
+end;
+
+procedure TFMenu1.AdicionaLista(gItem: String);
+begin
+  gLista.Add(gItem);
+end;
+
+function TFMenu1.PegaUltimoLista: String;
+begin
+  if gLista.Count > 0 then
+    begin
+      Result := gLista.Strings[gLista.Count -1];
+    end;
+end;
+
+procedure TFMenu1.RemoveLista;
+begin
+  if gLista.Count > 0 then
+    begin
+      gLista.Delete(gLista.Count - 1);
+    end;
 end;
 
 end.

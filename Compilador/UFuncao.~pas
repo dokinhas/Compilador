@@ -45,45 +45,49 @@ procedure Acao31();
 procedure Acao32();
 procedure Acao33();
 procedure Acao34();
-procedure Empilha(gObjeto: Variant);
-procedure Desempilha();
-function PegaObjetoTopo(): Variant;
+procedure Empilha(gObjeto: String);
+function Desempilha(): String;
+function PegaObjetoTopo(): String;
 
 implementation
 
 //USES
 uses
   ULexico, UToken, UConstants, ULexicalError, USemanticError, USyntaticError, UAnalysisError,
-  USintatico, USemantico, UMenu;
+  USintatico, USemantico, UMenu, Math;
 
 //VARIAVEIS
 var
-  gPilha: Variant;
+  gLista: TStringList;
   gTextoArquivo: TStringList;
 //CONSTANTES
 
 //METODOS
-procedure Empilha(gObjeto: Variant);
+procedure Empilha(gObjeto: String);
 begin
-  gPilha.Push(gObjeto);
-end;
+  gLista.Add(gObjeto);
+end; 
 
-procedure Desempilha();
+function Desempilha(): String;
+var
+  iRetorno: String;
 begin
-  if gPilha.Count > 0 then
+  {if gPilha1.Count > 0 then
     begin
-      gPilha.Pop;
+      iRetorno := gLista.Create;
+      gPilha1.Pop;
+      Result := iRetorno;
     end
   else
     begin
-      {PILHA VAZIA}
-    end;
+      Result := '';
+    end;}
 end;
 
-function PegaObjetoTopo(): Variant;
+function PegaObjetoTopo(): String;
 begin
-  if gPilha.Count > 0 then
-    Result := gPilha.Peek;
+  {if gPilha.Count > 0 then
+    Result := gPilha.Peek;}
     //Result := TStrings(gPilha.Peek).Text;
 end;
 
@@ -91,7 +95,7 @@ procedure EmpilhaTipo(sDivisao: boolean);
 var
   iTipo1, iTipo2: Variant;
 begin
-  iTipo1 := gPilha.Pop;
+  {iTipo1 := gPilha.Pop;
   iTipo2 := gPilha.Pop;
   if sDivisao = True then
     begin
@@ -108,7 +112,7 @@ begin
   else
     begin
       ValidaTipo(iTipo1, iTipo2);
-    end;
+    end;}
 end;
 
 procedure ValidaTipo(sTipo1, sTipo2: Variant);
@@ -118,9 +122,13 @@ begin
 end;
 
 procedure Acao1();
+var
+  iTipo1, iTipo2 : String;
 begin
- empilhaTipo(False);
- gTextoArquivo.Add('add');
+  iTipo1 := gPilha1.Desempilha;
+  iTipo2 := gPilha1.Desempilha;
+  {empilhaTipo(False);
+  gTextoArquivo.Add('add' + #13#10);}
 end;
 
 procedure Acao2();
@@ -132,6 +140,7 @@ end;
 procedure Acao3();
 begin
   empilhaTipo(False);
+  gTextoArquivo.Add('mul' + #13#10);
 end;
 
 procedure Acao4();
