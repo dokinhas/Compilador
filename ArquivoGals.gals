@@ -1,0 +1,185 @@
+#Options
+GenerateScanner = true
+GenerateParser = true
+Language = Delphi
+ScannerName = Lexico
+ParserName = Sintatico
+SemanticName = Semantico
+ScannerCaseSensitive = true
+ScannerTable = Hardcode
+Input = Stream
+Parser = LL
+#RegularDefinitions
+letra_mai : [A-Z]
+letra_min : [a-z]
+dig : [0-9]
+dig_maior_zero : [1-9]
+letras : [a-f]
+clinha : "/"+"/"[^\n]*
+cbloco : "/*" ([^"*"] | ("*")+ [^"*""/"] )* ("*/")  
+#Tokens
+id: ({letra_mai} | {letra_min}) ((_?) ({letra_mai} | {letra_min} | {dig}))* (_?)
+constante_inteira: 0 | {dig_maior_zero} ({dig})*
+constante_real: (0 | {dig_maior_zero} ({dig})*) \. ((0+ ({dig_maior_zero}) | {dig_maior_zero})+ | 0)
+constante_binaria: #(b | B) (0 | 1)+
+constante_hexadecimal: #(x | X) ({dig} | {letras})+
+constante_string: \" [^\"\n\\]* \"
+
+//Palavras Reservadas
+bin = id : "bin" 
+bool = id : "bool"
+def = id : "def"
+do = id : "do"
+elif = id : "elif"
+else = id : "else"
+end = id : "end"
+false = id : "false"
+float = id : "float"
+hexa = id : "hexa"
+if = id : "if"
+int = id : "int"
+listen = id : "listen"
+main = id : "main"
+speak = id : "speak"
+str = id : "str"
+toInt = id : "toInt"
+toBin = id : "toBin"
+toHexa = id : "toHexa"
+true = id : "true"
+whileFalse = id : "whileFalse"
+
+//Simbolos Especiais
+"("
+")"
+"=="
+"!="
+"<"
+">"
+"&"
+"|"
+"!"
+"+"
+"-"
+"*"
+"/"
+","
+"."
+";"
+":"
+"="
+"+="
+"-="
+
+//Caracteres de formatação: reconhecidos e ignorados
+:[\s\t\n\r]
+
+:! {clinha}
+:! {cbloco}
+#NonTerminals
+<declaracao>
+<declaracao_variavel>
+<lista_de_comandos>
+<comandos>
+<atribuicao>
+<entrada_de_dados>
+<saida_de_dados>
+<condicional>
+<repeticao>
+<variavel>
+<lista_id>
+<tipo>
+<valor>
+<lista_de_expressoes>
+<elif>
+<else>
+<elemento>
+<relacional>
+<relacional2>
+<operador_relacional>
+<aritmetica>
+<termo>
+<fator>
+<membro>
+<expressao>
+<expressao1>
+<aritmetica1>
+<termo1>
+<lista_id1>
+<lista_de_expressoes1>
+<lista_de_comandos1>
+<declaracao1>
+<variavel1>
+<atribuicao1>
+<relacional1>
+<fator1>
+<termo2>
+<fator2>
+<declaracaox>
+#Grammar
+<declaracao> ::= #15 <declaracao_variavel> main <lista_de_comandos> end #16;
+
+<lista_de_comandos> ::= <comandos> ";" <lista_de_comandos1> ;
+<lista_de_comandos1> ::= <lista_de_comandos> | î ;
+
+<comandos> ::= <atribuicao> | <entrada_de_dados> | <saida_de_dados> | <condicional> | <repeticao> ;
+
+<declaracao_variavel> ::= def <declaracaox> | î ;
+<declaracaox> ::= <variavel> <declaracao1> ;
+<declaracao1> ::= <declaracaox> | î ;
+
+<variavel> ::= <lista_id> <variavel1> ;
+<variavel1> ::= ":" <tipo> #30 #31 ";" | "=" <valor> #36 #37 ";" ;
+
+
+<tipo> ::= int | float | bool | str | bin | hexa ;
+
+<valor> ::= constante_inteira | constante_real | true | false | constante_string | constante_binaria | constante_hexadecimal ;
+
+<atribuicao>::= <lista_id> <atribuicao1> ;
+<atribuicao1>::= "=" #38 <expressao> #34 | "+=" #38 <expressao> #34 | "-=" #38 <expressao> #34;
+
+<lista_id> ::= id <lista_id1>;
+<lista_id1> ::= î | "," <lista_id> ;
+
+<entrada_de_dados> ::= listen "("<lista_id> #35 ")" ;
+
+<saida_de_dados> ::= speak "("<lista_de_expressoes>")" ;
+
+<lista_de_expressoes> ::= <expressao> #14 <lista_de_expressoes1> ;
+<lista_de_expressoes1> ::= î |"," <lista_de_expressoes> ;
+
+<condicional>::= if <expressao> #39 ":" <lista_de_comandos> <elif> <else> end #40;
+
+<elif> ::= #41 elif <expressao> #42 ":" <lista_de_comandos> <elif> | î ;
+
+<else> ::= #43 else <lista_de_comandos> | î ;
+
+<repeticao> ::= #44 do <lista_de_comandos> whileFalse ":" <expressao> #45 end ;
+
+
+
+<expressao> ::=  <elemento> <expressao1> ;
+<expressao1> ::= "&" <elemento> #17 <expressao1> |  "|" <elemento> #18 <expressao1> | î  ;
+
+<elemento> ::= <relacional> | true #11 | false #12 | "!" <elemento> #13 ;
+
+<relacional> ::= <aritmetica> <relacional1> ;
+<relacional1> ::= <operador_relacional> #9 <aritmetica> #10 | î ;
+
+
+<operador_relacional> ::= "==" | "!=" | "<" | ">" ;
+
+<aritmetica> ::=  <termo> <aritmetica1> ;
+<aritmetica1> ::= "+" <termo> #1 <aritmetica1> | "-" <termo> #2 <aritmetica1>  | î  ;
+
+<termo> ::=  <fator> <termo1>;
+<termo1> ::= "*" <fator> #3 <termo1> | "/" <fator> #4 <termo1> | î ;
+
+<fator> ::= <membro> <fator1> ;
+<fator1> ::= "." <fator2> | î ;
+<fator2> ::= toInt #22 | toBin #23 | toHexa #24 ;
+
+<membro> ::= id #33 | constante_inteira #5 | constante_real #6 | constante_string #19
+                | constante_binaria #20 | constante_hexadecimal #21 
+                | "(" <expressao> ")" |  "+" <membro> #7 | "-" <membro> #8 ;
+
